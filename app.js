@@ -1,23 +1,75 @@
-const fireAudio=document.querySelector('#fire-audio');const musicButton=document.querySelector('#music-button');const volumeControl=document.querySelector('#volume');fireAudio.volume=.35;volumeControl.addEventListener('input',()=>{fireAudio.volume=Number(volumeControl.value)/100});musicButton.addEventListener('click',event=>{event.stopImmediatePropagation();if(fireAudio.paused){fireAudio.play();musicButton.textContent='♨ 壁爐回聲施放中';}else{fireAudio.pause();musicButton.textContent='♨ 召喚壁爐回聲';}},true);
-document.querySelector('#enter-site').addEventListener('click',()=>{document.querySelector('#prelude').classList.add('leave');document.querySelector('#site-main').classList.add('entered');document.body.classList.add('site-entered');fireAudio.volume=.35;fireAudio.play().catch(()=>{});document.querySelector('#music-button').textContent='♨ 壁爐回聲施放中';});
-const floatingPhrases=['有些故事，只在火光裡說得出口。','你看到的最後一句，會成為下一個人的起點。','今晚留下的，不一定明天還找得到。','請把一句話交給陌生人，讓他替你帶走。','午夜以前，這個故事還屬於我們。'];let floatingIndex=0;const floatingPhrase=document.querySelector('#floating-phrase');setInterval(()=>{floatingPhrase.classList.add('fade-out');setTimeout(()=>{floatingIndex=(floatingIndex+1)%floatingPhrases.length;floatingPhrase.textContent=floatingPhrases[floatingIndex];floatingPhrase.classList.remove('fade-out');},650);},4300);
-const screens=[...document.querySelectorAll('[data-screen]')],dots=[...document.querySelectorAll('.page-dot')];let currentScreen=0;function showScreen(index){currentScreen=(index+screens.length)%screens.length;screens.forEach((screen,i)=>screen.classList.toggle('active-page',i===currentScreen));dots.forEach((dot,i)=>dot.classList.toggle('active',i===currentScreen));document.querySelector('#prev-page').disabled=currentScreen===0;document.querySelector('#next-page').disabled=currentScreen===screens.length-1;}document.querySelector('#prev-page').addEventListener('click',()=>showScreen(currentScreen-1));document.querySelector('#next-page').addEventListener('click',()=>showScreen(currentScreen+1));dots.forEach(dot=>dot.addEventListener('click',()=>showScreen(Number(dot.dataset.page))));showScreen(0);
-const form=document.querySelector('#relay-form'), entry=document.querySelector('#entry'), chars=document.querySelector('#chars'), success=document.querySelector('#success'), progress=document.querySelector('#progress'), countdown=document.querySelector('#countdown');
-const bannedWords=['幹','媽的','他媽','操','靠北','靠夭','雞巴','王八蛋','智障','白痴','fuck','shit','bitch','asshole'];
-function hasBannedWords(text){const normalized=text.toLowerCase().replace(/[\s\u200b]/g,'');return bannedWords.some(word=>normalized.includes(word));}
-entry.addEventListener('input',()=>{chars.textContent=`${entry.value.length} / 100`;document.querySelector('#content-warning').textContent='';});
-form.addEventListener('submit',e=>{e.preventDefault();if(!entry.value.trim())return;if(hasBannedWords(entry.value)){document.querySelector('#content-warning').textContent='這段文字包含不適合公開的用語，請換一種方式表達。';return;}form.style.display='none';success.style.display='block';document.querySelector('#ticket-button-home').disabled=false;progress.textContent='74';document.querySelector('#spots').textContent='還有 26 個位置';document.querySelector('#last-line').textContent=entry.value.trim();document.querySelector('#status').textContent='你已留下句子';});
-let demoMode=false;let burnDemoSeconds=299;let burnTimer;function formatClock(total){const h=String(Math.floor(total/3600)).padStart(2,'0'),m=String(Math.floor(total%3600/60)).padStart(2,'0'),s=String(total%60).padStart(2,'0');return `${h}:${m}:${s}`;}function secondsToMidnight(){const now=new Date(),end=new Date(now);end.setHours(24,0,0,0);return Math.max(0,Math.floor((end-now)/1000));}function renderCountdown(){if(demoMode)return;const remaining=secondsToMidnight(),h=String(Math.floor(remaining/3600)).padStart(2,'0'),m=String(Math.floor(remaining%3600/60)).padStart(2,'0'),s=String(remaining%60).padStart(2,'0');countdown.textContent=`${h}:${m}:${s}`;}renderCountdown();setInterval(renderCountdown,1000);
-const demoLines=['我一直以為，告別應該發生在我們都準備好的時候。','直到那天，我才發現，有些人甚至不會通知你，就從你的生活裡消失。','我把他的名字從通訊錄刪掉，卻還是記得那串號碼。','那串號碼像一扇關不起來的門，夜裡總有風從裡面吹出來。','有人說，遺忘是一種溫柔；可我覺得它比較像房間裡慢慢熄滅的燈。','燈熄滅後，我看見桌上多了一封沒有寄件人的信。','信封很輕，裡面卻裝著整個下午的雨聲。','我沒有立刻拆開，先把它放在火爐旁邊取暖。','紙邊開始捲起來時，字跡忽然自己換了位置。','它寫著：有些話不是要被讀完，而是要有人接下去。','於是我拿起筆，在最後一行留下了一個陌生人的名字。','窗外的雪停了，壁爐裡只剩下很小、很小的紅光。','那道紅光提醒我，故事還沒有結束，只是暫時換了一個人呼吸。','我想起今天第一個留下句子的人，他大概也正在某個房間裡等著。','等一個答案，或等下一個人替他寫下去。','謝謝你曾經在我的故事裡出現。就到這裡吧，晚安。'];
-const storyView=document.querySelector('#story-view'), storyLines=document.querySelector('#story-lines');
-document.querySelector('#unlock-demo').addEventListener('click',()=>{storyLines.innerHTML=demoLines.map((line,i)=>`<div class="story-line ${i===7?'my-line':''}"><span>匿名段落 ${String(i+1).padStart(2,'0')}${i===7?' · 你的句子':''}</span>${line}</div>`).join('');storyView.classList.add('open');storyView.setAttribute('aria-hidden','false');storyView.scrollIntoView({behavior:'smooth',block:'start'});});
-document.querySelector('#close-story').addEventListener('click',()=>{storyView.classList.remove('open');storyView.setAttribute('aria-hidden','true');});
-document.querySelector('#burn-demo').addEventListener('click',()=>{demoMode=!demoMode;document.body.classList.toggle('burning');const stage=document.querySelector('#burn-stage');stage.classList.toggle('open',demoMode);stage.classList.toggle('demo-wait',demoMode);stage.classList.remove('burning-now');stage.setAttribute('aria-hidden',String(!demoMode));document.querySelector('#status').textContent=demoMode?'倒數至焚毀':'接龍進行中';clearInterval(burnTimer);if(demoMode){burnDemoSeconds=299;document.querySelector('#countdown').textContent=formatClock(burnDemoSeconds);document.querySelector('#burn-countdown').textContent=`${formatClock(burnDemoSeconds)} · 火焰尚未觸及羊皮紙`;burnTimer=setInterval(()=>{burnDemoSeconds--;document.querySelector('#countdown').textContent=formatClock(Math.max(0,burnDemoSeconds));document.querySelector('#burn-countdown').textContent=burnDemoSeconds>0?`${formatClock(burnDemoSeconds)} · 火焰尚未觸及羊皮紙`:'00:00:00 · 羊皮紙正在焚毀';if(burnDemoSeconds<=0){clearInterval(burnTimer);stage.classList.remove('demo-wait');stage.classList.add('burning-now');document.querySelector('#status').textContent='祕密正在焚毀';}},1000);}else renderCountdown();});
-document.querySelector('#close-burn').addEventListener('click',()=>{demoMode=false;clearInterval(burnTimer);document.body.classList.remove('burning');document.querySelector('#burn-stage').classList.remove('open','demo-wait','burning-now');document.querySelector('#burn-stage').setAttribute('aria-hidden','true');document.querySelector('#status').textContent='接龍進行中';renderCountdown();});
-document.querySelector('#ticket-button-home').addEventListener('click',()=>{document.querySelector('#ticket-result-home').textContent='✦ 你是今晚第 74 位注入靈魂的陌生人 · 數位火柴已點燃';});
-document.querySelectorAll('[data-vote]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-vote]').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');document.querySelector('#vote-result').textContent=`你投給了「${btn.dataset.vote}」`; }));
-let audioCtx,master,noiseSource;document.querySelector('#music-button').addEventListener('click',()=>{const button=document.querySelector('#music-button');if(!audioCtx){audioCtx=new AudioContext();master=audioCtx.createGain();master.gain.value=.07;master.connect(audioCtx.destination);const bass=audioCtx.createOscillator();bass.type='sine';bass.frequency.value=58;const bassGain=audioCtx.createGain();bassGain.gain.value=.1;bass.connect(bassGain).connect(master);bass.start();const lfo=audioCtx.createOscillator(),lfoGain=audioCtx.createGain();lfo.frequency.value=.045;lfoGain.gain.value=10;lfo.connect(lfoGain).connect(bass.frequency);lfo.start();const buffer=audioCtx.createBuffer(1,audioCtx.sampleRate*2,audioCtx.sampleRate),data=buffer.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1)*.18;noiseSource=audioCtx.createBufferSource();noiseSource.buffer=buffer;noiseSource.loop=true;const filter=audioCtx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=560;noiseSource.connect(filter).connect(master);noiseSource.start();let crackleTimer=setInterval(()=>{if(audioCtx.state!=='running')return;const pop=audioCtx.createBufferSource(),popBuffer=audioCtx.createBuffer(1,audioCtx.sampleRate*(.08+Math.random()*.18),audioCtx.sampleRate),popData=popBuffer.getChannelData(0);for(let i=0;i<popData.length;i++)popData[i]=(Math.random()*2-1)*Math.pow(1-i/popData.length,2.5);pop.buffer=popBuffer;const popGain=audioCtx.createGain();popGain.gain.value=.08+Math.random()*.12;const popFilter=audioCtx.createBiquadFilter();popFilter.type='bandpass';popFilter.frequency.value=500+Math.random()*900;pop.connect(popFilter).connect(popGain).connect(master);pop.start();},900+Math.random()*1800);button.textContent='♫ 露營火堆聲播放中';}else if(audioCtx.state==='running'){audioCtx.suspend();button.textContent='♫ 播放露營火堆聲';}else{audioCtx.resume();button.textContent='♫ 露營火堆聲播放中';}});
-const magicCursor=document.querySelector('#magic-cursor');let lastMagicX=0,lastMagicY=0;document.addEventListener('pointermove',event=>{if(event.pointerType==='touch')return;const distance=Math.hypot(event.clientX-lastMagicX,event.clientY-lastMagicY);if(distance<13)return;lastMagicX=event.clientX;lastMagicY=event.clientY;const spark=document.createElement('span');spark.className='magic-spark';spark.style.left=`${event.clientX}px`;spark.style.top=`${event.clientY}px`;spark.style.setProperty('--drift-x',`${(Math.random()-.5)*34}px`);spark.style.setProperty('--drift-y',`${-12-Math.random()*32}px`);spark.style.setProperty('--spark-size',`${2+Math.random()*4}px`);spark.style.setProperty('--spark-hue',Math.random()>.72?'#9fd8ff':'#e8b866');magicCursor.appendChild(spark);setTimeout(()=>spark.remove(),900);});
-const ambientMagic=document.createElement('div');ambientMagic.className='ambient-magic';for(let i=0;i<28;i++){const mote=document.createElement('i');mote.style.setProperty('--x',`${Math.random()*100}%`);mote.style.setProperty('--delay',`${Math.random()*8}s`);mote.style.setProperty('--duration',`${7+Math.random()*9}s`);mote.style.setProperty('--size',`${1+Math.random()*3}px`);mote.style.setProperty('--drift',`${(Math.random()-.5)*90}px`);mote.style.setProperty('--hue',Math.random()>.8?'#a7d9db':'#e4b05d');ambientMagic.appendChild(mote);}document.body.appendChild(ambientMagic);
-floatingPhrases.splice(0,floatingPhrases.length,'有些故事，只在火光裡說出口。','最後一句，交給下一個人。','今晚留下，明日消逝。','把一句話交給陌生人。','午夜以前，故事還活著。');
-if (location.search.includes('burn-preview')) { burnDemoSeconds=8; setTimeout(() => { document.querySelector('#enter-site')?.click(); setTimeout(() => document.querySelector('#burn-demo')?.click(), 900); }, 500); }
+const TAIPEI_TIME_ZONE = 'Asia/Taipei';
+function taipeiParts(date = new Date()) {
+  return Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: TAIPEI_TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', hourCycle: 'h23' }).formatToParts(date).filter(({ type }) => type !== 'literal').map(({ type, value }) => [type, value]));
+}
+window.storyburnerToday = () => { const p = taipeiParts(); return `${p.year}-${p.month}-${p.day}`; };
+window.storyburnerReadingOpen = () => Number(taipeiParts().hour) >= 22;
+
+const fireAudio = document.querySelector('#fire-audio');
+const musicButton = document.querySelector('#music-button');
+const volumeControl = document.querySelector('#volume');
+fireAudio.volume = Number(volumeControl.value) / 100;
+volumeControl.addEventListener('input', () => { fireAudio.volume = Number(volumeControl.value) / 100; });
+musicButton.addEventListener('click', () => {
+  if (fireAudio.paused) { fireAudio.play().catch(() => {}); musicButton.textContent = '♨ 壁爐回聲施放中'; }
+  else { fireAudio.pause(); musicButton.textContent = '♨ 召喚壁爐回聲'; }
+});
+document.querySelector('#enter-site').addEventListener('click', () => {
+  document.querySelector('#prelude').classList.add('leave');
+  document.querySelector('#site-main').classList.add('entered');
+  document.body.classList.add('site-entered');
+});
+
+const floatingPhrases = ['有些故事，只在火光裡說出口。', '最後一句，交給下一個人。', '今晚留下，明日消逝。', '把一句話交給陌生人。', '午夜以前，故事還活著。'];
+let floatingIndex = 0;
+const floatingPhrase = document.querySelector('#floating-phrase');
+setInterval(() => { floatingPhrase.classList.add('fade-out'); setTimeout(() => { floatingIndex = (floatingIndex + 1) % floatingPhrases.length; floatingPhrase.textContent = floatingPhrases[floatingIndex]; floatingPhrase.classList.remove('fade-out'); }, 650); }, 4300);
+
+const screens = [...document.querySelectorAll('[data-screen]')];
+const dots = [...document.querySelectorAll('.page-dot')];
+let currentScreen = 0;
+function showScreen(index) {
+  currentScreen = (index + screens.length) % screens.length;
+  screens.forEach((screen, i) => screen.classList.toggle('active-page', i === currentScreen));
+  dots.forEach((dot, i) => dot.classList.toggle('active', i === currentScreen));
+  document.querySelector('#prev-page').disabled = currentScreen === 0;
+  document.querySelector('#next-page').disabled = currentScreen === screens.length - 1;
+}
+document.querySelector('#prev-page').addEventListener('click', () => showScreen(currentScreen - 1));
+document.querySelector('#next-page').addEventListener('click', () => showScreen(currentScreen + 1));
+dots.forEach(dot => dot.addEventListener('click', () => showScreen(Number(dot.dataset.page))));
+showScreen(0);
+
+const entry = document.querySelector('#entry');
+const chars = document.querySelector('#chars');
+const bannedWords = ['幹', '媽的', '他媽', '操', '靠北', '靠夭', '雞巴', '王八蛋', '智障', '白痴', 'fuck', 'shit', 'bitch', 'asshole'];
+window.hasBannedWords = text => bannedWords.some(word => text.toLowerCase().replace(/[\s\u200b]/g, '').includes(word));
+entry.addEventListener('input', () => { chars.textContent = `${entry.value.length} / 100`; document.querySelector('#content-warning').textContent = ''; });
+
+const countdown = document.querySelector('#countdown');
+let demoMode = false, burnDemoSeconds = 299, burnTimer;
+const formatClock = total => `${String(Math.floor(total / 3600)).padStart(2, '0')}:${String(Math.floor(total % 3600 / 60)).padStart(2, '0')}:${String(total % 60).padStart(2, '0')}`;
+function secondsToTaipeiMidnight() {
+  const p = taipeiParts(); const localNow = new Date(`${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}:${p.second}+08:00`); const next = new Date(localNow); next.setHours(24, 0, 0, 0); return Math.max(0, Math.floor((next - localNow) / 1000));
+}
+function renderCountdown() { if (!demoMode) countdown.textContent = formatClock(secondsToTaipeiMidnight()); }
+renderCountdown(); setInterval(renderCountdown, 1000);
+
+const storyView = document.querySelector('#story-view');
+document.querySelector('#close-story').addEventListener('click', () => { storyView.classList.remove('open'); storyView.setAttribute('aria-hidden', 'true'); });
+document.querySelector('#burn-demo').addEventListener('click', () => {
+  demoMode = !demoMode; const stage = document.querySelector('#burn-stage'); stage.classList.toggle('open', demoMode); stage.classList.toggle('demo-wait', demoMode); stage.classList.remove('burning-now'); stage.setAttribute('aria-hidden', String(!demoMode)); clearInterval(burnTimer);
+  if (!demoMode) return renderCountdown();
+  burnDemoSeconds = location.search.includes('burn-preview') ? 8 : 299; countdown.textContent = formatClock(burnDemoSeconds);
+  burnTimer = setInterval(() => { burnDemoSeconds -= 1; countdown.textContent = formatClock(Math.max(0, burnDemoSeconds)); document.querySelector('#burn-countdown').textContent = burnDemoSeconds > 0 ? `${formatClock(burnDemoSeconds)} · 火焰尚未觸及羊皮紙` : '00:00:00 · 羊皮紙正在焚毀'; if (burnDemoSeconds <= 0) { clearInterval(burnTimer); stage.classList.remove('demo-wait'); stage.classList.add('burning-now'); } }, 1000);
+});
+document.querySelector('#close-burn').addEventListener('click', () => { demoMode = false; clearInterval(burnTimer); document.querySelector('#burn-stage').classList.remove('open', 'demo-wait', 'burning-now'); document.querySelector('#burn-stage').setAttribute('aria-hidden', 'true'); renderCountdown(); });
+document.querySelector('#ticket-button-home').addEventListener('click', () => { document.querySelector('#ticket-result-home').textContent = '✦ 你的數位火柴已點燃；今晚可用它回到完整日記。'; });
+document.querySelectorAll('[data-vote]').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('[data-vote]').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); document.querySelector('#vote-result').textContent = `你投給了「${btn.dataset.vote}」`; }));
+
+const magicCursor = document.querySelector('#magic-cursor'); let lastMagicX = 0, lastMagicY = 0;
+document.addEventListener('pointermove', event => { if (event.pointerType === 'touch' || Math.hypot(event.clientX - lastMagicX, event.clientY - lastMagicY) < 13) return; lastMagicX = event.clientX; lastMagicY = event.clientY; const spark = document.createElement('span'); spark.className = 'magic-spark'; spark.style.left = `${event.clientX}px`; spark.style.top = `${event.clientY}px`; spark.style.setProperty('--drift-x', `${(Math.random() - .5) * 34}px`); spark.style.setProperty('--drift-y', `${-12 - Math.random() * 32}px`); spark.style.setProperty('--spark-size', `${2 + Math.random() * 4}px`); spark.style.setProperty('--spark-hue', Math.random() > .72 ? '#9fd8ff' : '#e8b866'); magicCursor.appendChild(spark); setTimeout(() => spark.remove(), 900); });
+const ambientMagic = document.createElement('div'); ambientMagic.className = 'ambient-magic';
+for (let i = 0; i < 28; i += 1) { const mote = document.createElement('i'); mote.style.setProperty('--x', `${Math.random() * 100}%`); mote.style.setProperty('--delay', `${Math.random() * 8}s`); mote.style.setProperty('--duration', `${7 + Math.random() * 9}s`); mote.style.setProperty('--size', `${1 + Math.random() * 3}px`); mote.style.setProperty('--hue', Math.random() > .8 ? '#a7d9db' : '#e4b05d'); ambientMagic.appendChild(mote); }
+document.body.appendChild(ambientMagic);
+if (location.search.includes('burn-preview')) setTimeout(() => { document.querySelector('#enter-site')?.click(); setTimeout(() => document.querySelector('#burn-demo')?.click(), 900); }, 500);
