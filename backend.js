@@ -20,7 +20,7 @@ async function loadStoryState() {
   const quoteMeta = document.querySelector('#quote-meta');
   if (last) {
     lastLine.textContent = last.content;
-    quoteMeta.textContent = `匿名段落 ${String(last.position).padStart(2, '0')} · 等待你接住下一句`;
+    quoteMeta.textContent = `匿名段落 ${String(last.position).padStart(2, '0')} · 等待你接住故事`;
   } else {
     lastLine.textContent = '我在壁爐熄滅前，收到一封寫著自己名字的信。';
     quoteMeta.textContent = '開場句 · 等待第一位學徒接住它';
@@ -35,7 +35,7 @@ async function loadStoryState() {
 function renderStoryLines(lines) {
   const container = document.querySelector('#story-lines');
   container.replaceChildren();
-  if (!lines.length) { const empty = document.createElement('div'); empty.className = 'empty-story'; empty.textContent = '今晚的故事還沒有完成。回到羊皮紙，留下第一句吧。'; container.appendChild(empty); return; }
+  if (!lines.length) { const empty = document.createElement('div'); empty.className = 'empty-story'; empty.textContent = '今晚的故事還沒有完成。回到羊皮紙，寫下開場吧。'; container.appendChild(empty); return; }
   lines.forEach(line => { const row = document.createElement('div'); row.className = 'story-line'; const label = document.createElement('span'); label.textContent = `匿名段落 ${String(line.position).padStart(2, '0')}`; row.append(label, document.createTextNode(line.content)); container.appendChild(row); });
 }
 
@@ -52,7 +52,7 @@ relayForm.addEventListener('submit', async event => {
   if (window.hasBannedWords(content)) { warning.textContent = '這段文字包含不適合公開的用語，請換一種方式表達。'; return; }
   warning.textContent = '正在把句子交給羊皮紙…';
   const { error } = await sb.rpc('submit_story_entry', { p_content: content, p_visitor_id: visitorId });
-  if (error) { warning.textContent = error.message.includes('already') ? '你今天已留下一句；今晚 22:00 回來閱讀完整故事。' : error.message.includes('full') ? '今晚的羊皮紙已寫滿，請明天再回來。' : '目前無法送出，請稍後再試。'; return; }
+  if (error) { warning.textContent = error.message.includes('already') ? '你今天已留下文字；今晚 22:00 回來閱讀完整故事。' : error.message.includes('full') ? '今晚的羊皮紙已寫滿，請明天再回來。' : '目前無法送出，請稍後再試。'; return; }
   localStorage.setItem(`storyburner-submitted-${storyDate()}`, '1'); relayForm.style.display = 'none'; success.style.display = 'block'; success.querySelector('span').textContent = '你的句子已成為下一位陌生人的起點。今晚 22:00，回來閱讀完整故事。'; document.querySelector('#ticket-button-home').disabled = false; document.querySelector('#status').textContent = '你已留下句子'; await loadStoryState();
 });
 

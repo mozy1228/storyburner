@@ -4,45 +4,45 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>STORYBURNER — 午夜學院的祕密</title>
-  <meta name="description" content="一部由陌生小說家施下咒語、只存在到午夜的奇幻故事。" />
+  <meta name="description" content="一部由陌生小說家共同施展魔法、只存在到午夜的奇幻故事。" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Iansui&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260908-9" />
+  <link rel="stylesheet" href="styles.css?v=20260908-10" />
 </head>
 <body>
-  <div id="magic-cursor" aria-hidden="true"></div>
+  <div id="magic-cursor" aria-hidden="true"></div><div class="side-spell" aria-hidden="true"><i>✦</i><b>✧</b><em>ᛟ</em></div>
   <div class="grain"></div><div class="orb orb-a"></div><div class="orb orb-b"></div>
   <section id="prelude" class="prelude" aria-label="進入午夜學院"><div class="prelude-haze"></div><div class="invitation"><div class="invitation-border"><div class="prelude-mark">THE MIDNIGHT ACADEMY</div><p class="letter-kicker">給今晚收到這封信的人</p><p class="prelude-invite">拆開信件，<br/><em>留下今天的下一句。</em></p><p class="prelude-whisper">你寫下的句子，會成為下一個陌生人的起點。<br/>今晚 22:00，回來閱讀完整故事。</p><button id="enter-site" class="enter-site">開始接龍 <span>↗</span></button><small>STORYBURNER · VOL. 042</small></div></div></section>
   <header class="topbar"><div class="mark"><span class="mark-dot"></span><span>STORYBURNER</span></div></header>
   <main id="site-main"><nav class="page-nav" aria-label="頁面導覽"><button id="prev-page" aria-label="上一頁">←</button><div class="page-dots"><button class="page-dot active" data-page="0" aria-label="第 1 頁"></button><button class="page-dot" data-page="1" aria-label="第 2 頁"></button><button class="page-dot" data-page="2" aria-label="第 3 頁"></button></div><button id="next-page" aria-label="下一頁">→</button></nav>
     <section class="hero page-panel active-page" data-screen="0">
       <div class="eyebrow">MIDNIGHT ACADEMY · VOL. 042 <span>／</span> 2026.09.08</div><div class="floating-copy" aria-live="polite"><span id="floating-phrase">今晚，讓故事施下一道魔法。</span></div>
-      <h1>每一句話，<br/>都是一個<em>咒語</em>。</h1>
-      <p class="intro">這不是日記，是一部只活到午夜的奇幻小說。<br/>每位陌生小說家只寫一句，讓故事長出下一章。</p>
+      <h1>每一段文字，<br/>都是一場<em>魔法</em>。</h1>
+      <p class="intro">這不是日記，是一部只活到午夜的奇幻小說。<br/>每位陌生小說家寫下一小段，讓故事長出下一章。</p>
       <div class="countdown-wrap"><div class="countdown-label">距離今日祕密銷毀還剩</div><div id="countdown" class="countdown">--:--:--</div><div class="countdown-rule"><span></span></div></div>
       <div class="status-row"><div><span class="pulse"></span><span id="status">接龍進行中</span></div><div><span id="progress">73</span> / 100 段落已被留下 · <span id="spots">還有 27 個位置</span></div></div><div class="hero-audio"><button id="music-button" class="music-button">♨ 召喚壁爐回聲</button><label class="volume-control" for="volume"><span>音量</span><input id="volume" type="range" min="0" max="100" value="35" aria-label="音效音量"></label><span class="music-note">手動施放，預設靜音</span></div>
     </section>
 
     <section class="workspace page-panel" data-screen="1">
-      <div class="workspace-layout"><aside class="panel writing-guide"><span class="index">魔法小說接龍</span><h3>你不是讀者，<br/>你是下一位小說家。</h3><p>只握住眼前這一句，替故事添上一道新的魔法。</p><div class="guide-rule"><span>01</span> 一次一句</div><div class="guide-rule"><span>02</span> 最多 100 字</div><div class="guide-rule"><span>03</span> 匿名接棒</div><div class="guide-seal">故事由你施法</div></aside><div class="panel relay-panel">
-        <div class="spell-intro"><span class="index">今晚的咒題</span><h2 id="spell-title" data-text="給未來的自己的一封信" aria-label="給未來的自己的一封信"></h2></div>
+      <div class="workspace-layout"><aside class="panel writing-guide"><span class="index">魔法小說接龍</span><h3>你不是讀者，<br/>你是故事的魔法師。</h3><p>接住眼前的文字，替故事添上新的魔法。</p><div class="guide-rule"><span>01</span> 寫一小段</div><div class="guide-rule"><span>02</span> 最多 100 字</div><div class="guide-rule"><span>03</span> 匿名接棒</div></aside><div class="panel relay-panel">
+        <div class="spell-intro"><span class="index">今晚題目</span><h2 id="spell-title" data-text="給未來的自己的一封信" aria-label="給未來的自己的一封信"></h2></div>
         <div class="quote"><span class="quote-mark">“</span><p id="last-line">我在壁爐熄滅前，收到一封寫著自己名字的信。</p><span id="quote-meta" class="quote-meta">開場句 · 等待第一位小說家接住它</span></div>
-        <form id="relay-form"><label for="entry">施下你的下一句</label><textarea id="entry" maxlength="100" placeholder="也許，信裡寫著……" required></textarea><div id="content-warning" class="content-warning" role="alert"></div><div class="form-foot"><span id="chars">0 / 100</span><button type="submit">施下咒語 <span>↗</span></button></div></form>
+        <form id="relay-form"><label for="entry">寫下接續的魔法（最多 100 字）</label><textarea id="entry" maxlength="100" placeholder="也許，信裡寫著……" required></textarea><div id="content-warning" class="content-warning" role="alert"></div><div class="form-foot"><span id="chars">0 / 100</span><button type="submit">施展魔法 <span>↗</span></button></div></form>
         <div id="success" class="success">你的句子已被收進今晚的祕密。<span>你是第 74 位。今晚 22:00，回來閱讀完整故事。</span><div class="hero-ticket"><button id="ticket-button-home" class="ticket-button" disabled>✦ 生成我的數位火柴票</button><div id="ticket-result-home" class="ticket-result"></div></div><small class="ticket-benefit">這張票是你今晚閱讀完整故事的憑證。</small></div>
       </div></div>
     </section>
-    <section id="story-view" class="story-view" aria-hidden="true"><div class="story-top"><div><span class="index">VOL. 042 / 完整篇章</span><h2>今夜，故事被施成了什麼模樣？</h2></div><button id="close-story" class="close-button">關閉閱讀 ×</button></div><p class="story-note">以下內容由 <span id="story-count">0</span> 位陌生小說家，在看不見全貌的情況下共同施下。</p><div id="story-lines" class="story-lines"></div><div class="story-end">這部小說仍有 02:00:00 的生命。<br/><span>請慢慢讀，然後記住你想留下的那一句。</span></div><div class="quote-card" id="quote-card"><span>今夜咒語卡 · VOL. 042</span><strong id="card-line">謝謝你曾經在我的故事裡出現。</strong><small>剩餘生命 02:00:00 · VOID / 24</small></div></section>
+    <section id="story-view" class="story-view" aria-hidden="true"><div class="story-top"><div><span class="index">VOL. 042 / 完整篇章</span><h2>今夜，故事被施成了什麼模樣？</h2></div><button id="close-story" class="close-button">關閉閱讀 ×</button></div><p class="story-note">以下內容由 <span id="story-count">0</span> 位陌生小說家，在看不見全貌的情況下共同施下。</p><div id="story-lines" class="story-lines"></div><div class="story-end">這部小說仍有 02:00:00 的生命。<br/><span>請慢慢讀，記住你想留下的文字。</span></div><div class="quote-card" id="quote-card"><span>今夜魔法卡 · VOL. 042</span><strong id="card-line">謝謝你曾經在我的故事裡出現。</strong><small>剩餘生命 02:00:00 · VOID / 24</small></div></section>
     <section id="burn-stage" class="burn-stage" aria-hidden="true"><div class="burn-header"><span class="index">23:55 — FINAL BURN</span><button id="close-burn" class="close-button">離開火爐 ×</button></div><div class="magic-circle" aria-hidden="true"><span>✦　ᛟ　✧　ᛉ　✦　ᛟ　✧　ᛉ</span></div><div class="fireplace"><div class="paper"><span>VOL. 042 · THE LAST PAGE</span><p>今夜，故事被施成了什麼模樣？</p><div class="paper-lines">有些故事，只在火光裡說得出口。<br/>請把最後一句交還給寂靜。</div><small>0 位陌生小說家共同施下</small></div></div><div class="burn-copy">文字正在回到寂靜<br/><span id="burn-countdown">00:04:59 · 火焰尚未觸及羊皮紙</span></div></section>
-    <section class="page-panel page-three" data-screen="2"><div class="page-three-grid"><div class="panel ticket-panel"><div class="panel-head compact"><div><span class="index">02</span><h2>今夜魔法小說</h2></div><span class="ticket-count">還有 100 個席位</span></div><p>故事從第一個咒語開始，並由下一位小說家接著施下去。</p><div class="ticket-line"><span>目前進度</span><strong><span id="ritual-progress">0</span> / 100 段落</strong></div><div class="ticket-line"><span>閱讀開啟</span><strong>今晚 22:00</strong></div><div class="ticket-line"><span>閱讀時限</span><strong>02:00:00</strong></div><div class="ticket-note">你今晚只需要施下一句。重新整理、稍後回來，它仍留在這部小說裡。</div></div><div class="panel ritual-panel"><div class="panel-head compact"><div><span class="index">03</span><h2>壁爐銷毀儀式</h2></div></div><div class="ritual-copy">23:55，羊皮紙開始褪色。<br/>23:59:59，火焰會收回最後一個字。</div><div class="ash">·　·　·　·　·　·　·</div><div class="tomorrow">明日 00:00<br/><span>新的祕密將在鐘聲後出現</span></div><p id="reading-note" class="ticket-note">完整篇章將在今晚 22:00 開啟，午夜準時焚毀。</p><button id="unlock-demo" class="reading-button" hidden>閱讀今晚完整篇章</button><button id="burn-demo" class="ghost-button testing-only">模擬最後 5 分鐘</button></div></div></section>
+    <section class="page-panel page-three" data-screen="2"><div class="page-three-grid"><div class="panel ticket-panel"><div class="panel-head compact"><div><span class="index">02</span><h2>今夜魔法小說</h2></div><span class="ticket-count">還有 100 個席位</span></div><p>故事從開場魔法展開，並由每位小說家接力延伸。</p><div class="ticket-line"><span>目前進度</span><strong><span id="ritual-progress">0</span> / 100 段落</strong></div><div class="ticket-line"><span>閱讀開啟</span><strong>今晚 22:00</strong></div><div class="ticket-line"><span>閱讀時限</span><strong>02:00:00</strong></div><div class="ticket-note">今晚寫下一小段。重新整理、稍後回來，它仍留在這部小說裡。</div></div><div class="panel ritual-panel"><div class="panel-head compact"><div><span class="index">03</span><h2>壁爐銷毀儀式</h2></div></div><div class="ritual-copy">23:55，羊皮紙開始褪色。<br/>23:59:59，火焰會收回最後一個字。</div><div class="ash">·　·　·　·　·　·　·</div><div class="tomorrow">明日 00:00<br/><span>新的祕密將在鐘聲後出現</span></div><p id="reading-note" class="ticket-note">完整篇章將在今晚 22:00 開啟，午夜準時焚毀。</p><button id="unlock-demo" class="reading-button" hidden>閱讀今晚完整篇章</button><button id="burn-demo" class="ghost-button testing-only">模擬最後 5 分鐘</button></div></div></section>
   <footer><span>沒有登入。只留到午夜。沒有重來。</span><span>© STORYBURNER · MIDNIGHT ACADEMY</span></footer>
   </main>
   <audio id="fire-audio" src="assets/campfire.mp3" loop preload="metadata"></audio>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js"></script>
-  <script src="app.js?v=20260908-6"></script>
-  <script src="backend.js?v=20260908-5"></script>
+  <script src="app.js?v=20260908-7"></script>
+  <script src="backend.js?v=20260908-6"></script>
 </body>
 </html>

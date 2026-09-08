@@ -21,7 +21,7 @@ document.querySelector('#enter-site').addEventListener('click', () => {
   fireAudio.play().then(() => { musicButton.textContent = '♨ 壁爐回聲施放中'; }).catch(() => {});
 });
 
-const floatingPhrases = ['今晚，讓故事施下一道魔法。', '一句話，能打開一整個世界。', '把不可能寫進火光裡。', '下一章，等待你的咒語。', '午夜以前，故事仍在生長。'];
+const floatingPhrases = ['今晚，讓故事施下一道魔法。', '一段文字，能打開整個世界。', '把不可能寫進火光裡。', '下一章，等待你的魔法。', '午夜以前，故事仍在生長。'];
 let floatingIndex = 0;
 const floatingPhrase = document.querySelector('#floating-phrase');
 setInterval(() => { floatingPhrase.classList.add('fade-out'); setTimeout(() => { floatingIndex = (floatingIndex + 1) % floatingPhrases.length; floatingPhrase.textContent = floatingPhrases[floatingIndex]; floatingPhrase.classList.remove('fade-out'); }, 650); }, 4300);
