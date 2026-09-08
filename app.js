@@ -21,7 +21,7 @@ document.querySelector('#enter-site').addEventListener('click', () => {
   fireAudio.play().then(() => { musicButton.textContent = '♨ 壁爐回聲施放中'; }).catch(() => {});
 });
 
-const floatingPhrases = ['有些故事，只在火光裡說出口。', '最後一句，交給下一個人。', '今晚留下，明日消逝。', '把一句話交給陌生人。', '午夜以前，故事還活著。'];
+const floatingPhrases = ['今晚，讓故事施下一道魔法。', '一句話，能打開一整個世界。', '把不可能寫進火光裡。', '下一章，等待你的咒語。', '午夜以前，故事仍在生長。'];
 let floatingIndex = 0;
 const floatingPhrase = document.querySelector('#floating-phrase');
 setInterval(() => { floatingPhrase.classList.add('fade-out'); setTimeout(() => { floatingIndex = (floatingIndex + 1) % floatingPhrases.length; floatingPhrase.textContent = floatingPhrases[floatingIndex]; floatingPhrase.classList.remove('fade-out'); }, 650); }, 4300);
@@ -29,12 +29,28 @@ setInterval(() => { floatingPhrase.classList.add('fade-out'); setTimeout(() => {
 const screens = [...document.querySelectorAll('[data-screen]')];
 const dots = [...document.querySelectorAll('.page-dot')];
 let currentScreen = 0;
+const spellWorkspace = document.querySelector('.workspace');
+const spellTitle = document.querySelector('#spell-title');
+function revealWritingSpell() {
+  if (spellWorkspace.dataset.revealed) return;
+  spellWorkspace.dataset.revealed = 'true';
+  spellWorkspace.classList.add('spell-awake');
+  [...spellTitle.dataset.text].forEach((glyph, index) => {
+    const letter = document.createElement('span');
+    letter.className = 'spell-glyph';
+    letter.textContent = glyph;
+    letter.style.animationDelay = `${index * 100}ms`;
+    spellTitle.appendChild(letter);
+  });
+  setTimeout(() => spellWorkspace.classList.add('story-line-revealed'), spellTitle.dataset.text.length * 100 + 320);
+}
 function showScreen(index) {
   currentScreen = (index + screens.length) % screens.length;
   screens.forEach((screen, i) => screen.classList.toggle('active-page', i === currentScreen));
   dots.forEach((dot, i) => dot.classList.toggle('active', i === currentScreen));
   document.querySelector('#prev-page').disabled = currentScreen === 0;
   document.querySelector('#next-page').disabled = currentScreen === screens.length - 1;
+  if (currentScreen === 1) revealWritingSpell();
 }
 document.querySelector('#prev-page').addEventListener('click', () => showScreen(currentScreen - 1));
 document.querySelector('#next-page').addEventListener('click', () => showScreen(currentScreen + 1));
@@ -65,7 +81,7 @@ document.querySelector('#burn-demo').addEventListener('click', () => {
   burnTimer = setInterval(() => { burnDemoSeconds -= 1; countdown.textContent = formatClock(Math.max(0, burnDemoSeconds)); document.querySelector('#burn-countdown').textContent = burnDemoSeconds > 0 ? `${formatClock(burnDemoSeconds)} · 火焰尚未觸及羊皮紙` : '00:00:00 · 羊皮紙正在焚毀'; if (burnDemoSeconds <= 0) { clearInterval(burnTimer); stage.classList.remove('demo-wait'); stage.classList.add('burning-now'); } }, 1000);
 });
 document.querySelector('#close-burn').addEventListener('click', () => { demoMode = false; clearInterval(burnTimer); document.querySelector('#burn-stage').classList.remove('open', 'demo-wait', 'burning-now'); document.querySelector('#burn-stage').setAttribute('aria-hidden', 'true'); renderCountdown(); });
-document.querySelector('#ticket-button-home').addEventListener('click', () => { document.querySelector('#ticket-result-home').textContent = '✦ 你的數位火柴已點燃；今晚可用它回到完整日記。'; });
+document.querySelector('#ticket-button-home').addEventListener('click', () => { document.querySelector('#ticket-result-home').textContent = '✦ 你的數位火柴已點燃；今晚可用它回到完整篇章。'; });
 document.querySelectorAll('[data-vote]').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('[data-vote]').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); document.querySelector('#vote-result').textContent = `你投給了「${btn.dataset.vote}」`; }));
 
 const magicCursor = document.querySelector('#magic-cursor'); let lastMagicX = 0, lastMagicY = 0;

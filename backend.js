@@ -42,7 +42,7 @@ function renderStoryLines(lines) {
 function updateReadingState() {
   const open = window.storyburnerReadingOpen();
   readingButton.hidden = !open; readingButton.disabled = !open;
-  readingNote.textContent = open ? '今晚的完整日記已開啟，將在午夜回到寂靜。' : '完整日記將在今晚 22:00 開啟，午夜準時焚毀。';
+  readingNote.textContent = open ? '今晚的完整篇章已開啟，將在午夜回到寂靜。' : '完整篇章將在今晚 22:00 開啟，午夜準時焚毀。';
 }
 
 relayForm.addEventListener('submit', async event => {
