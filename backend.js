@@ -58,8 +58,12 @@ if (localStorage.getItem(`storyburner-submitted-${today()}`)) {
 
 if (typeof demoLines !== 'undefined') demoLines.splice(0, demoLines.length);
 document.querySelector('#unlock-demo').addEventListener('click', () => {
-  if (typeof demoLines !== 'undefined' && demoLines.length === 0) {
-    document.querySelector('#story-lines').innerHTML = '<div class="empty-story">今晚的故事還沒有完成。<br/><span>回到羊皮紙，留下第一句吧。</span></div>';
-  }
+  loadApprovedStory();
 });
+async function loadApprovedStory() {
+  const { data } = await sb.from('story_entries').select('position, content').eq('story_date', today()).eq('status', 'approved').order('position', { ascending: true });
+  const storyLines = document.querySelector('#story-lines');
+  if (!data?.length) { storyLines.innerHTML = '<div class="empty-story">今晚的故事還沒有完成。<br/><span>回到羊皮紙，留下第一句吧。</span></div>'; return; }
+  storyLines.innerHTML = data.map((line) => `<div class="story-line"><span>匿名段落 ${String(line.position).padStart(2, '0')}</span>${line.content}</div>`).join('');
+}
 loadStoryState();
