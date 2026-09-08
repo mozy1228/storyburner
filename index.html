@@ -30,8 +30,9 @@
     <section class="workspace page-panel" data-screen="1">
       <div class="workspace-layout"><div class="panel relay-panel">
         <div class="panel-head"><div><span class="index">01</span><h2>在羊皮紙上留下下一句</h2></div><span class="locked">匿名學徒 <span class="lock">⌁</span></span></div>
-        <div class="quote"><span class="quote-mark">“</span><p id="last-line">今晚的第一句，還在等你寫下。</p><span class="quote-meta">今日尚未有人留言</span></div>
-        <form id="relay-form"><label for="entry">接續寫下你的下一句（最多 100 字，一句也可以）</label><div class="prompt-hint">請接住上一句中的一個畫面、物件或情緒。不必寫得漂亮，只要留下下一步。</div><textarea id="entry" maxlength="100" placeholder="也許，你想說的是……" required></textarea><div class="privacy-note">請勿留下真實姓名、電話、地址或他人的私人資訊。守門咒語會先檢查不適合公開的內容。</div><div id="content-warning" class="content-warning" role="alert"></div><div class="form-foot"><span id="chars">0 / 100</span><button type="submit">留下這一句 <span>↗</span></button></div></form>
+        <details class="theme-card" open><summary>今晚題目 · 給未來的自己的一封信 <span>展開題目</span></summary><p>壁爐熄滅前，你收到一封沒有寄件人的信；信封上，卻寫著你的名字。</p></details>
+        <div class="quote"><span class="quote-mark">“</span><p id="last-line">我在壁爐熄滅前，收到一封寫著自己名字的信。</p><span id="quote-meta" class="quote-meta">開場句 · 等待第一位學徒接住它</span></div>
+        <form id="relay-form"><label for="entry">接續寫下這個故事（最多 100 字，一句也可以）</label><div class="prompt-hint">請接住上一句中的一個畫面、物件或情緒。不必寫得漂亮，只要留下下一步。</div><textarea id="entry" maxlength="100" placeholder="也許，信裡寫著……" required></textarea><div class="privacy-note">請勿留下真實姓名、電話、地址或他人的私人資訊。守門咒語會先檢查不適合公開的內容。</div><div id="content-warning" class="content-warning" role="alert"></div><div class="form-foot"><span id="chars">0 / 100</span><button type="submit">留下這一句 <span>↗</span></button></div></form>
         <div id="success" class="success">你的句子已被收進今晚的祕密。<span>你是第 74 位。今晚 22:00，回來閱讀完整故事。</span><div class="hero-ticket"><button id="ticket-button-home" class="ticket-button" disabled>✦ 生成我的數位火柴票</button><div id="ticket-result-home" class="ticket-result"></div></div><small class="ticket-benefit">這張票是你今晚閱讀完整故事的憑證。</small></div>
       </div><aside class="panel writing-guide"><span class="index">今晚的寫作規則</span><h3>接住一個畫面，<br/>把故事交給下一個人。</h3><p>你不需要知道前面發生了什麼。只要從上一句裡挑一個細節，讓它往前走一步。</p><div class="guide-rule"><span>01</span> 只看見上一位的最後一句</div><div class="guide-rule"><span>02</span> 最多 100 字，保持匿名</div><div class="guide-rule"><span>03</span> 守門咒語檢查後接棒</div><div class="guide-seal">火光會替你保守秘密</div></aside></div>
     </section>
@@ -44,6 +45,6 @@
   <audio id="fire-audio" src="assets/campfire.mp3" loop preload="metadata"></audio>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js"></script>
   <script src="app.js?v=20260908-5"></script>
-  <script src="backend.js?v=20260908-4"></script>
+  <script src="backend.js?v=20260908-5"></script>
 </body>
 </html>

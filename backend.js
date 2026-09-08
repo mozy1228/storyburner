@@ -16,7 +16,15 @@ async function loadStoryState() {
   const { data, error } = await sb.from('story_entries').select('position, content').eq('story_date', storyDate()).eq('status', 'approved').order('position', { ascending: true });
   if (error) { console.warn('讀取故事失敗', error.message); return []; }
   const last = data.at(-1);
-  if (last) document.querySelector('#last-line').textContent = last.content;
+  const lastLine = document.querySelector('#last-line');
+  const quoteMeta = document.querySelector('#quote-meta');
+  if (last) {
+    lastLine.textContent = last.content;
+    quoteMeta.textContent = `匿名段落 ${String(last.position).padStart(2, '0')} · 等待你接住下一句`;
+  } else {
+    lastLine.textContent = '我在壁爐熄滅前，收到一封寫著自己名字的信。';
+    quoteMeta.textContent = '開場句 · 等待第一位學徒接住它';
+  }
   document.querySelector('#progress').textContent = data.length;
   document.querySelector('#spots').textContent = `還有 ${Math.max(0, 100 - data.length)} 個位置`;
   document.querySelector('#ritual-progress').textContent = data.length;
