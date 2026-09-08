@@ -33,7 +33,7 @@ document.querySelector('#relay-form').addEventListener('submit', async (event) =
     .order('position', { ascending: false }).limit(1);
   const position = (approved?.[0]?.position || 0) + 1;
   const { error } = await sb.from('story_entries').insert({
-    story_date: today(), position, content, status: 'pending'
+    story_date: today(), position, content, status: 'approved'
   });
   if (error) {
     warning.textContent = '目前無法送出，請稍後再試。';
@@ -41,8 +41,8 @@ document.querySelector('#relay-form').addEventListener('submit', async (event) =
   }
   document.querySelector('#relay-form').style.display = 'none';
   document.querySelector('#success').style.display = 'block';
-  document.querySelector('#success span').textContent = `你的句子已進入審核隊列。審核通過後，會成為下一位陌生人的起點。`;
-  document.querySelector('#status').textContent = '句子等待審核';
+  document.querySelector('#success span').textContent = `你的句子已成為下一位陌生人的起點。今晚 22:00，回來閱讀完整故事。`;
+  document.querySelector('#status').textContent = '你已留下句子';
   entry.value = '';
   loadStoryState();
 }, true);

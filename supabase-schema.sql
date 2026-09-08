@@ -20,10 +20,11 @@ create policy "public can read approved entries"
   on public.story_entries for select to anon
   using (status = 'approved' and story_date = current_date);
 
+drop policy if exists "public can submit entries" on public.story_entries;
 drop policy if exists "public can submit pending entries" on public.story_entries;
-create policy "public can submit pending entries"
+create policy "public can submit entries"
   on public.story_entries for insert to anon
-  with check (status = 'pending' and story_date = current_date);
+  with check (status = 'approved' and story_date = current_date);
 
 -- Admin review is intentionally not exposed to anon. Use the Supabase dashboard
 -- or an authenticated admin panel for updates/rejections.
