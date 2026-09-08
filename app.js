@@ -1,6 +1,6 @@
 const TAIPEI_TIME_ZONE = 'Asia/Taipei';
 function taipeiParts(date = new Date()) {
-  return Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: TAIPEI_TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', hourCycle: 'h23' }).formatToParts(date).filter(({ type }) => type !== 'literal').map(({ type, value }) => [type, value]));
+  return Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: TAIPEI_TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' }).formatToParts(date).filter(({ type }) => type !== 'literal').map(({ type, value }) => [type, value]));
 }
 window.storyburnerToday = () => { const p = taipeiParts(); return `${p.year}-${p.month}-${p.day}`; };
 window.storyburnerReadingOpen = () => Number(taipeiParts().hour) >= 22;
@@ -18,6 +18,7 @@ document.querySelector('#enter-site').addEventListener('click', () => {
   document.querySelector('#prelude').classList.add('leave');
   document.querySelector('#site-main').classList.add('entered');
   document.body.classList.add('site-entered');
+  fireAudio.play().then(() => { musicButton.textContent = '♨ 壁爐回聲施放中'; }).catch(() => {});
 });
 
 const floatingPhrases = ['有些故事，只在火光裡說出口。', '最後一句，交給下一個人。', '今晚留下，明日消逝。', '把一句話交給陌生人。', '午夜以前，故事還活著。'];
