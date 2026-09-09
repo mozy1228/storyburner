@@ -31,6 +31,23 @@ const dots = [...document.querySelectorAll('.page-dot')];
 let currentScreen = 0;
 const spellWorkspace = document.querySelector('.workspace');
 const spellTitle = document.querySelector('#spell-title');
+const dailyThemes = [
+  ['月光下會說話的地圖', '地圖在月光下慢慢攤開，最北端多出了一座從未存在過的塔。'],
+  ['最後一班會飛的列車', '午夜鐘聲響起時，站牌前停下了一班沒有軌道的列車。'],
+  ['玻璃瓶裡的小宇宙', '我打開那只玻璃瓶，裡面飄出了一顆迷你星球和一場暴風雨。'],
+  ['忘記名字的龍', '那條龍伏在屋頂上，低聲問我：你知道我曾經叫什麼嗎？'],
+  ['會開花的魔杖', '魔杖第一次開花時，花瓣上寫著一個我不認識的地址。'],
+  ['第十三道門', '走廊盡頭原本只有十二道門，今夜卻多了一扇微微發光的門。'],
+  ['把影子寄出去的人', '郵差送來一個空盒子，裡面只有我的影子正在向我揮手。'],
+  ['雲端的圖書館', '那本書從雲裡掉下來，封面寫著：請替我補完最後一頁。'],
+  ['會倒流的沙漏', '沙粒往上飛的瞬間，房間裡每個人都想起了明天的事。'],
+  ['月亮遺失的一封信', '月亮今晚少了一角，缺口裡夾著一封還帶著銀光的信。']
+];
+const themeDay = Math.floor(new Date(`${window.storyburnerToday()}T00:00:00+08:00`).getTime() / 86_400_000);
+const [themeTitle, themeStarter] = dailyThemes[themeDay % dailyThemes.length];
+window.storyburnerTheme = { title: themeTitle, starter: themeStarter };
+spellTitle.dataset.text = themeTitle;
+document.querySelector('#last-line').textContent = themeStarter;
 function revealWritingSpell() {
   if (spellWorkspace.dataset.revealed) return;
   spellWorkspace.dataset.revealed = 'true';
@@ -81,7 +98,6 @@ document.querySelector('#burn-demo').addEventListener('click', () => {
   burnTimer = setInterval(() => { burnDemoSeconds -= 1; countdown.textContent = formatClock(Math.max(0, burnDemoSeconds)); document.querySelector('#burn-countdown').textContent = burnDemoSeconds > 0 ? `${formatClock(burnDemoSeconds)} · 火焰尚未觸及羊皮紙` : '00:00:00 · 羊皮紙正在焚毀'; if (burnDemoSeconds <= 0) { clearInterval(burnTimer); stage.classList.remove('demo-wait'); stage.classList.add('burning-now'); } }, 1000);
 });
 document.querySelector('#close-burn').addEventListener('click', () => { demoMode = false; clearInterval(burnTimer); document.querySelector('#burn-stage').classList.remove('open', 'demo-wait', 'burning-now'); document.querySelector('#burn-stage').setAttribute('aria-hidden', 'true'); renderCountdown(); });
-document.querySelector('#ticket-button-home').addEventListener('click', () => { document.querySelector('#ticket-result-home').textContent = '✦ 你的數位火柴已點燃；今晚可用它回到完整篇章。'; });
 document.querySelectorAll('[data-vote]').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('[data-vote]').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); document.querySelector('#vote-result').textContent = `你投給了「${btn.dataset.vote}」`; }));
 
 const magicCursor = document.querySelector('#magic-cursor'); let lastMagicX = 0, lastMagicY = 0;

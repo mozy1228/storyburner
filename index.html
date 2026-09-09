@@ -29,10 +29,10 @@
 
     <section class="workspace page-panel" data-screen="1">
       <div class="workspace-layout"><aside class="panel writing-guide"><span class="index">魔法小說接龍</span><h3>你不是讀者，<br/>你是故事的魔法師。</h3><p>接住眼前的文字，替故事添上新的魔法。</p><div class="guide-rule"><span>01</span> 寫一小段</div><div class="guide-rule"><span>02</span> 最多 100 字</div><div class="guide-rule"><span>03</span> 匿名接棒</div></aside><div class="panel relay-panel">
-        <div class="spell-intro"><span class="index">今晚題目</span><h2 id="spell-title" data-text="給未來的自己的一封信" aria-label="給未來的自己的一封信"></h2></div>
-        <div class="quote"><span class="quote-mark">“</span><p id="last-line">我在壁爐熄滅前，收到一封寫著自己名字的信。</p><span id="quote-meta" class="quote-meta">開場句 · 等待第一位小說家接住它</span></div>
-        <form id="relay-form"><label for="entry">寫下接續的魔法（最多 100 字）</label><textarea id="entry" maxlength="100" placeholder="也許，信裡寫著……" required></textarea><div id="content-warning" class="content-warning" role="alert"></div><div class="form-foot"><span id="chars">0 / 100</span><button type="submit">施展魔法 <span>↗</span></button></div></form>
-        <div id="success" class="success">你的句子已被收進今晚的祕密。<span>你是第 74 位。今晚 22:00，回來閱讀完整故事。</span><div class="hero-ticket"><button id="ticket-button-home" class="ticket-button" disabled>✦ 生成我的數位火柴票</button><div id="ticket-result-home" class="ticket-result"></div></div><small class="ticket-benefit">這張票是你今晚閱讀完整故事的憑證。</small></div>
+        <div class="spell-intro"><span class="index">今晚題目</span><h2 id="spell-title" data-text="月光下會說話的地圖" aria-label="今晚的故事題目"></h2></div>
+        <div class="quote"><span class="quote-mark">“</span><p id="last-line">地圖在月光下慢慢攤開，最北端多出了一座從未存在過的塔。</p><span id="quote-meta" class="quote-meta">開場句 · 等待第一位小說家接住它</span></div>
+        <form id="relay-form"><label for="entry">寫下接續的魔法（最多 100 字）</label><textarea id="entry" maxlength="100" placeholder="也許，地圖指向了……" required></textarea><div id="content-warning" class="content-warning" role="alert"></div><div class="form-foot"><span id="chars">0 / 100</span><button type="submit">施展魔法 <span>↗</span></button></div></form>
+        <div id="success" class="success">你的魔法已被收進今晚的故事。<span>今晚 22:00，回來閱讀完整篇章。</span></div>
       </div></div>
     </section>
     <section id="story-view" class="story-view" aria-hidden="true"><div class="story-top"><div><span class="index">VOL. 042 / 完整篇章</span><h2>今夜，故事被施成了什麼模樣？</h2></div><button id="close-story" class="close-button">關閉閱讀 ×</button></div><p class="story-note">以下內容由 <span id="story-count">0</span> 位陌生小說家，在看不見全貌的情況下共同施下。</p><div id="story-lines" class="story-lines"></div><div class="story-end">這部小說仍有 02:00:00 的生命。<br/><span>請慢慢讀，記住你想留下的文字。</span></div><div class="quote-card" id="quote-card"><span>今夜魔法卡 · VOL. 042</span><strong id="card-line">謝謝你曾經在我的故事裡出現。</strong><small>剩餘生命 02:00:00 · VOID / 24</small></div></section>
@@ -42,7 +42,7 @@
   </main>
   <audio id="fire-audio" src="assets/campfire.mp3" loop preload="metadata"></audio>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js"></script>
-  <script src="app.js?v=20260908-7"></script>
-  <script src="backend.js?v=20260908-6"></script>
+  <script src="app.js?v=20260910-1"></script>
+  <script src="backend.js?v=20260910-1"></script>
 </body>
 </html>

@@ -22,8 +22,8 @@ async function loadStoryState() {
     lastLine.textContent = last.content;
     quoteMeta.textContent = `匿名段落 ${String(last.position).padStart(2, '0')} · 等待你接住故事`;
   } else {
-    lastLine.textContent = '我在壁爐熄滅前，收到一封寫著自己名字的信。';
-    quoteMeta.textContent = '開場句 · 等待第一位學徒接住它';
+    lastLine.textContent = window.storyburnerTheme.starter;
+    quoteMeta.textContent = '開場句 · 等待第一位小說家接住它';
   }
   document.querySelector('#progress').textContent = data.length;
   document.querySelector('#spots').textContent = `還有 ${Math.max(0, 100 - data.length)} 個位置`;
@@ -53,7 +53,7 @@ relayForm.addEventListener('submit', async event => {
   warning.textContent = '正在把句子交給羊皮紙…';
   const { error } = await sb.rpc('submit_story_entry', { p_content: content, p_visitor_id: visitorId });
   if (error) { warning.textContent = error.message.includes('already') ? '你今天已留下文字；今晚 22:00 回來閱讀完整故事。' : error.message.includes('full') ? '今晚的羊皮紙已寫滿，請明天再回來。' : '目前無法送出，請稍後再試。'; return; }
-  localStorage.setItem(`storyburner-submitted-${storyDate()}`, '1'); relayForm.style.display = 'none'; success.style.display = 'block'; success.querySelector('span').textContent = '你的句子已成為下一位陌生人的起點。今晚 22:00，回來閱讀完整故事。'; document.querySelector('#ticket-button-home').disabled = false; document.querySelector('#status').textContent = '你已留下句子'; await loadStoryState();
+  localStorage.setItem(`storyburner-submitted-${storyDate()}`, '1'); relayForm.style.display = 'none'; success.style.display = 'block'; success.querySelector('span').textContent = '你的魔法已經留在故事裡。今晚 22:00，回來閱讀完整篇章。'; document.querySelector('#status').textContent = '你已留下文字'; await loadStoryState();
 });
 
 if (localStorage.getItem(`storyburner-submitted-${storyDate()}`)) { relayForm.style.display = 'none'; success.style.display = 'block'; success.querySelector('span').textContent = '你今天已留下句子。今晚 22:00，回來閱讀完整故事。'; }
